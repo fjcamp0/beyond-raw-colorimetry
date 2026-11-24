@@ -1,8 +1,12 @@
 # Beyond RAW: The Beer-Lambert-Bayer Integral and Channel-Ratio Correction in Smartphone Transmission Colorimetry
 
-Analysis and figure-generation code accompanying the paper by Gajjala, Bach, Rodríguez
-Muiña, Lakard, Hihn and del Campo, accepted in *ACS Measurement Science Au* (2026). The
-article DOI will be added here on publication; see `CITATION.cff`.
+Analysis and figure-generation code for the article *Beyond RAW: The Beer-Lambert-Bayer
+Integral and Channel-Ratio Correction in Smartphone Transmission Colorimetry*, accepted in
+**ACS Measurement Science Au** (2026). See [How to cite](#how-to-cite).
+
+This repository reproduces the figures and tables of the article. To analyse your own
+images with the same method, use the companion app
+[image-lab](https://github.com/fjcamp0/image-lab), which needs no programming.
 
 The paper derives and validates the Beer-Lambert-Bayer integral, the governing equation for
 transmission colorimetry through a Bayer-filtered smartphone camera channel:
@@ -87,6 +91,31 @@ python scripts/forward_model.py --project /path/to/Ferricyanide --illuminant ...
 
 See `scripts/README.md` for the full script index and `figure_style.md` for the
 publication figure style every figure script follows.
+
+## How to cite
+
+This software accompanies the following article. Please cite it if you use the code:
+
+> Gajjala, R. K. R.; Bach, S.; Rodríguez Muiña, S.; Lakard, B.; Hihn, J.-Y.; del Campo, F. J.
+> Beyond RAW: The Beer-Lambert-Bayer Integral and Channel-Ratio Correction in Smartphone
+> Transmission Colorimetry. *ACS Measurement Science Au* **2026**, accepted for publication
+> (in press). DOI to be added on publication.
+
+The data behind the article (RAW and JPEG images, UV-Vis and illuminant spectra, and the
+extracted tables) are on Zenodo: https://doi.org/10.5281/zenodo.23212497
+
+```bibtex
+@article{gajjala2026beyondraw,
+  author  = {Gajjala, Rajendra Kumar Reddy and Bach, St{\'e}lina and
+             Rodr{\'i}guez Mui{\~n}a, Stephania and Lakard, Boris and
+             Hihn, Jean-Yves and del Campo, F. Javier},
+  title   = {Beyond {RAW}: The {Beer-Lambert-Bayer} Integral and Channel-Ratio
+             Correction in Smartphone Transmission Colorimetry},
+  journal = {ACS Measurement Science Au},
+  year    = {2026},
+  note    = {Accepted for publication}
+}
+```
 
 ## License
 
