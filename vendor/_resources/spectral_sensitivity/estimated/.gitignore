@@ -1,0 +1,6 @@
+# Estimated curves are fetched on demand from the Color-Lab-Eilat dataset,
+# which ships no LICENSE. Do not commit the derived data — only this folder's
+# README and .gitignore are tracked. Each user fetches what they need via
+# scripts/fetch_estimated_sensitivity.py.
+*.txt
+!.gitignore

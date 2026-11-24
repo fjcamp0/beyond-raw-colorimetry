@@ -1,0 +1,126 @@
+# Configuration for figure_5_alternative.py
+#
+# Alternative rendering of main-text Figure 6 (disk folder figure_5/LED/
+# figure_5_assembled_LED.png). Adds an explicit transparent-tail annotation
+# (f_tail %) and an absorbance-shape overlay to panel A, borrowing the
+# mechanism-clarity approach used in Supplementary Figure S9a (disk folder
+# figure_S11) — see the editorial discussion of Figure 6 vs S9a/b, 2026-07-09.
+#
+# 2026-07-29: Q5 of correction_plan_javier-steph_2026-07-29.md (jdc's ruling)
+# adds methylene blue panels (c)/(d), reusing figure_5.py's new
+# figure_5c_LED.csv/figure_5d_LED.csv as-is (same "reuse, don't recompute"
+# convention as panels a/b). Panel letters also changed from bare "A"/"B" to
+# "(a)"/"(b)" to match the lowercase-in-brackets convention used everywhere
+# else in the manuscript.
+#
+# Does NOT overwrite figure_5/. Outputs go to figure_5_alternative/. Edit the
+# values below to retune the figure without touching the script.
+
+paths:
+  # Reused as-is from the existing, already-reviewed Figure 6 data products —
+  # not recomputed here, so the collapse curves are guaranteed identical to
+  # the current main-text figure.
+  integrand_b_channel_csv: "Manuscript/_drafts/figures/figure_5/LED/figure_5a_LED.csv"
+  integrand_g_channel_csv: "Manuscript/_drafts/figures/figure_5/LED/figure_5b_LED.csv"
+  # Methylene blue panels, reused as-is from figure_5.py's own output.
+  integrand_mb_r_channel_csv: "Manuscript/_drafts/figures/figure_5/LED/figure_5c_LED.csv"
+  integrand_mb_g_channel_csv: "Manuscript/_drafts/figures/figure_5/LED/figure_5d_LED.csv"
+  # Absorbance shape reference, reused from the vetted Supplementary Figure S3a/S3b
+  # (transparent-tail concept) data product (disk folder figure_S3, was figure_S11
+  # before the 2026-07-31 SI rename pass -- this path was stale/broken pointing at
+  # figure_S11 even before that, the real file always lived under the ftail-content
+  # folder; fixed here as a side effect). Computed at 8000 uM in that file; only the
+  # *shape* is used here (renormalised to peak = 1), since A(lambda) = eps(lambda)*c*l
+  # is proportional to c at fixed l -- the shape is concentration-independent.
+  absorbance_reference_csv: "Manuscript/_drafts/figures/figure_S3/figure_S3_ftail_data.csv"
+  # 2026-09-21: the comment that used to sit here claimed the producer script had
+  # not been rerun and that the header was "still figure_S7_...". That is false --
+  # figure_S3_ftail_data.csv on disk carries the figure_S3_ prefix, so the old
+  # value was a KeyError. Verified against the live header, not assumed.
+  absorbance_reference_column: "figure_S3_ftail_ferricyanide_A_cmax_8000uM"
+  # 2026-09-21: was figure_5_alternative/LED, a folder that no longer exists. The
+  # _alternative render was merged into figure_5/ in the 2026-07-29 rename pass and
+  # Manuscript/figures.yaml:136 reads figure_5/LED/figure_5_alt_assembled_LED.png.
+  # The script does mkdir(parents=True), so the old value would have silently
+  # created an orphan folder and left the manuscript on the stale PNG.
+  output_dir: "Manuscript/_drafts/figures/figure_5/LED"
+  output_basename: "figure_5_alt"
+
+# Concentration series plotted (must match the column names in the
+# ferricyanide integrand CSVs above exactly).
+concentrations:
+  columns: ["blank", "62.5uM", "250.0uM", "1000.0uM", "2000.0uM"]
+  blank_column: "blank"
+  # dark blue (lowest non-zero) to light blue (highest); sampled from the
+  # matplotlib "Blues" colormap at these positions, matching figure_5.py.
+  blues_cmap_range: [0.85, 0.30]
+  blank_color: "#7f7f7f"
+
+# Methylene blue concentration series (must match figure_5.py's MB_CONCS_UM
+# and the column names in the MB integrand CSVs above exactly).
+mb_concentrations:
+  columns: ["blank", "3.1uM", "12.5uM", "50.0uM", "100.0uM"]
+  blank_column: "blank"
+
+reference_lines:
+  lambda_max_nm: 420.0
+  lambda_max_color: "#cc0000"
+  # 2026-09-21: was 480.0, which matched no stated criterion (eps at 0.28% of peak).
+  # jdc adopted "the transparent region begins where eps falls below 1% of its peak
+  # and stays there", which for ferricyanide gives 473 nm.
+  tail_boundary_nm: 473.0
+  tail_boundary_color: "#2166ac"
+  tail_shade_color: "#deebf7"
+  tail_shade_alpha: 0.65
+
+# Methylene blue's R-channel tail sits on the opposite side of its boundary
+# (tail below 426 nm, not above) and has no single sharp lambda_max -- see
+# figure_5.py's MB_TAIL_WL/MB_TAIL_ABOVE for the same convention.
+#
+# 2026-09-21: was 490.0, an R-channel sensitivity criterion (<5% of peak). jdc
+# ruled the 1%-of-eps-peak rule applies to both analytes, which for MB gives
+# 426 nm. NOTE: this file is the only place the figure's MB boundary is set --
+# figure_5_alternative.py reads it from here, so changing MB_TAIL_WL in the
+# scripts does NOT affect this figure. Keep the two in step by hand.
+mb_reference_lines:
+  tail_boundary_nm: 426.0
+  tail_boundary_color: "#2166ac"
+  tail_shade_color: "#deebf7"
+  tail_shade_alpha: 0.65
+
+# f_tail is cited, not recomputed here, to avoid a second, possibly
+# numerically-drifted estimate of a number already established in the main
+# text. If the source equation is ever revised, update this value to match.
+annotation:
+  # 2026-09-21: was 56.1, the value at the old 480 nm boundary and computed before
+  # the split_at_cutoff() fix. At 473 nm, half-boundary partition, the computed value
+  # is 62.420%, but it is quoted here to two significant figures because the tenths
+  # digit is not supportable. Measured budget, ferricyanide B channel under the LED:
+  #   df_tail/dlambda            = 0.87 pp per nm of boundary
+  #   boundary from eps's own SE  = +/-0.6 nm  -> +/-0.50 pp
+  #   partition convention        = +/-0.42 pp (literal node vs half-boundary)
+  # and the native UV-Vis grid is 5 nm, so the boundary is an interpolated quantity
+  # to begin with. Total ~0.5-0.9 pp, i.e. 5-9x the 0.1 pp the tenths digit claims.
+  # Two figures also matches the prose, which says "about 62%". If this is ever put
+  # back to one decimal, figure_5_alternative.py's ":.1f" must change with it --
+  # the script currently formats this value with ":.0f".
+  f_tail_percent: 62
+  f_tail_source: "473 nm boundary, half-boundary partition; Manuscript/_ai_outputs/handoffs/2026-09-21b_ftail_regeneration.md. NEEDS A CITABLE NOTE: the 1% rule is not yet written down in any document, only in inline comments, and the old authority (_ai_outputs/analysis_notes/ftail_analysis_figure3_notes.md) still says 480 nm is correct."
+  f_tail_position_nm: 610.0
+  f_tail_position_frac_y: 0.18
+
+absorbance_overlay:
+  color: "#B03A2E"
+  linestyle: "--"
+  linewidth: 0.9
+  alpha: 0.85
+  ylabel: "Absorbance shape (normalised, arb.)"
+
+wavelength_range_nm: [390.0, 700.0]
+
+style:
+  acs_panel_width_in: 3.25
+  acs_panel_height_in: 2.85  # 2026-10-05: with the e-f row, Figure 5 stays within 8.5 in
+  assembled_width_in: 7.0
+  dpi: 600
+  font_family: ["Arial", "Helvetica", "DejaVu Sans"]

@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "Beyond RAW: analysis code for the Beer-Lambert-Bayer integral"
+type: software
+license: Apache-2.0
+version: "1.0.0"
+date-released: "2026-11-24"
+authors:
+  - family-names: Gajjala
+    given-names: Rajendra Kumar Reddy
+    orcid: "https://orcid.org/0000-0002-9193-5295"
+  - family-names: Bach
+    given-names: Stélina
+  - family-names: Rodríguez Muiña
+    given-names: Stephania
+    orcid: "https://orcid.org/0009-0006-3196-8964"
+  - family-names: Lakard
+    given-names: Boris
+    orcid: "https://orcid.org/0000-0001-9686-4978"
+  - family-names: Hihn
+    given-names: Jean-Yves
+    orcid: "https://orcid.org/0000-0002-7857-2098"
+  - family-names: del Campo
+    given-names: F. Javier
+    orcid: "https://orcid.org/0000-0002-3637-5782"
+references:
+  - type: dataset
+    title: "Data for: Beyond RAW: The Beer-Lambert-Bayer Integral and Channel-Ratio Correction in Smartphone Transmission Colorimetry"
+    doi: "10.5281/zenodo.23212497"
+    authors:
+      - name: "Gajjala, Bach, Rodríguez Muiña, Lakard, Hihn, del Campo"
+preferred-citation:
+  type: article
+  title: "Beyond RAW: The Beer-Lambert-Bayer Integral and Channel-Ratio Correction in Smartphone Transmission Colorimetry"
+  journal: "ACS Measurement Science Au"
+  year: 2026
+  status: in-press
+  authors:
+    - family-names: Gajjala
+      given-names: Rajendra Kumar Reddy
+    - family-names: Bach
+      given-names: Stélina
+    - family-names: Rodríguez Muiña
+      given-names: Stephania
+    - family-names: Lakard
+      given-names: Boris
+    - family-names: Hihn
+      given-names: Jean-Yves
+    - family-names: del Campo
+      given-names: F. Javier
